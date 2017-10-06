@@ -10,11 +10,13 @@ namespace LuckyNumbers
     {
         static void Main(string[] args)
         {
+            //Set up
             Console.WriteLine("Thanks for playing Lucky Numbers. Please enter a number.");
             int rangeStart = int.Parse(Console.ReadLine());
-            Console.WriteLine("Please enter a second number that is at least 20 greater than your first number.");
+            Console.WriteLine("Please enter a second number that is at least 20 greater than your first number");
             int rangeEnd = int.Parse(Console.ReadLine());
 
+            //Part 1
             int[] guessedNumbers = new int[6];
             for (int i = 0; i <= 5; i++)
             {
@@ -27,10 +29,18 @@ namespace LuckyNumbers
                 else
                 {
                     Console.WriteLine("Please enter a valid number");
-                    i = i - 1;
+                    i = i - 1; //To avoid the iteration from continuing until we have a valid number
                 }
             }
-            Console.WriteLine(guessedNumbers[4]);
+
+            //Part 2
+            int[] luckyNumbers = new int[6];
+            Random luckyNumber = new Random();
+            for (int i = 0; i <= 5; i++)
+            {
+                luckyNumbers[i] = luckyNumber.Next(rangeStart, rangeEnd + 1);
+                Console.WriteLine("Lucky Number: " + luckyNumbers[i]);
+            }
         }
     }
 }
