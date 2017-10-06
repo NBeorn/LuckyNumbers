@@ -10,60 +10,70 @@ namespace LuckyNumbers
     {
         static void Main(string[] args)
         {
-            //Set up - User creates the range
-            Console.WriteLine("Thanks for playing Lucky Numbers. Please enter a number.");
-            int rangeStart = int.Parse(Console.ReadLine());
-            Console.WriteLine("Please enter a second number that is at least 20 greater than your first number");
-            int rangeEnd = int.Parse(Console.ReadLine());
-
-            //Part 1 - User chooses their numbers
-            int[] guessedNumbers = new int[6];
-            for (int i = 0; i <= 5; i++)
+            string playAgain;
+            do
             {
-                Console.WriteLine("Now, please guess a number within the range you have created");
-                int guessedNumber = int.Parse(Console.ReadLine());
-                if (guessedNumber >= rangeStart && guessedNumber <= rangeEnd)
+                //Set up - User creates the range
+                Console.WriteLine("Thanks for playing Lucky Numbers. Please enter a number.");
+                int rangeStart = int.Parse(Console.ReadLine());
+                Console.WriteLine("Please enter a second number that is at least 20 greater than your first number");
+                int rangeEnd = int.Parse(Console.ReadLine());
+
+                //Part 1 - User chooses their numbers
+                int[] guessedNumbers = new int[6];
+                for (int i = 0; i <= 5; i++)
                 {
-                    guessedNumbers[i] = guessedNumber;
+                    Console.WriteLine("Now, please guess a number within the range you have created");
+                    int guessedNumber = int.Parse(Console.ReadLine());
+                    if (guessedNumber >= rangeStart && guessedNumber <= rangeEnd)
+                    {
+                        guessedNumbers[i] = guessedNumber;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid number");
+                        i = i - 1; //To avoid the iteration from continuing until we have a valid number
+                    }
                 }
-                else
+
+                //Part 2 - System generates winning numbers
+
+                Console.WriteLine("\nThe winning numbers are:\n");
+
+                int[] luckyNumbers = new int[6];
+                Random luckyNumber = new Random();
+                for (int i = 0; i <= 5; i++)
                 {
-                    Console.WriteLine("Please enter a valid number");
-                    i = i - 1; //To avoid the iteration from continuing until we have a valid number
+                    luckyNumbers[i] = luckyNumber.Next(rangeStart, rangeEnd + 1);
+                    Console.WriteLine("Lucky Number: " + luckyNumbers[i]);
                 }
-            }
 
-            //Part 2 - System generates winning numbers
+                //Part 3 - System determines how many matches the User had, and prints both that and their winnings based on the Jackpot
+                Console.WriteLine("\nThe total Jackpot is: $1,000,000");
+                int matchingNumbers = 0;
 
-            Console.WriteLine("\nThe winning numbers are:\n");
-
-            int[] luckyNumbers = new int[6];
-            Random luckyNumber = new Random();
-            for (int i = 0; i <= 5; i++)
-            {
-                luckyNumbers[i] = luckyNumber.Next(rangeStart, rangeEnd + 1);
-                Console.WriteLine("Lucky Number: " + luckyNumbers[i]);
-            }
-
-            //Part 3 - System determines how many matches the User had, and prints both that and their winnings based on the Jackpot
-            Console.WriteLine("\nThe total Jackpot is: $1,000,000");
-            int matchingNumbers = 0;
-            
-            for (int i = 0; i <= 5; i++)
-            {
-                if (guessedNumbers[i] == luckyNumbers[i])
+                foreach (int number in luckyNumbers)
                 {
-                    continue;
+                    foreach (int number2 in guessedNumbers)
+                    {
+                        if (number == number2)
+                        {
+                            matchingNumbers++;
+                        }
+                    }
                 }
-                matchingNumbers++;
+
+                //Final Output
+                double jackpot = (matchingNumbers / 6d) * 1000000d;
+
+                Console.WriteLine("\nYou guessed " + matchingNumbers + " numbers correctly");
+
+                Console.WriteLine("\nYour winnings are: $" + Math.Round(jackpot, 2) + "!");
+
+                Console.WriteLine("\nWould you like to play again?");
+                playAgain = Console.ReadLine();
             }
-
-            //Final Output
-            double jackpot = (matchingNumbers / 6) * 1000000;
-
-            Console.WriteLine("\nYou guessed " + matchingNumbers + " numbers correctly");
-
-            Console.WriteLine("\nYour winnings are: $" + jackpot + "!");
+            while (playAgain.ToLower() == "yes");
         }
     }
 }
