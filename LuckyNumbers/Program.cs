@@ -18,6 +18,7 @@ namespace LuckyNumbers
                 int rangeStart = int.Parse(Console.ReadLine());
                 Console.WriteLine("Please enter a second number that is at least 20 greater than your first number");
                 int rangeEnd = int.Parse(Console.ReadLine());
+                Console.WriteLine("\nYour range is " + rangeStart + " to " + rangeEnd + "\n");
 
                 //Part 1 - User chooses their numbers
                 int[] guessedNumbers = new int[6];
@@ -37,7 +38,6 @@ namespace LuckyNumbers
                 }
 
                 //Part 2 - System generates winning numbers
-
                 Console.WriteLine("\nThe winning numbers are:\n");
 
                 int[] luckyNumbers = new int[6];
@@ -70,10 +70,12 @@ namespace LuckyNumbers
 
                 Console.WriteLine("\nYour winnings are: $" + Math.Round(jackpot, 2) + "!");
 
+                //Part 4 - Play again?
                 Console.WriteLine("\nWould you like to play again?");
                 playAgain = Console.ReadLine();
             }
             while (playAgain.ToLower() == "yes");
+            Console.WriteLine("\nThanks for playing!");
         }
     }
 }
